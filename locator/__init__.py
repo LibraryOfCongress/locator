@@ -134,7 +134,7 @@ def output(input_line, prefix=None, postfix=None, outf=sys.stdout):
     prefix is printed prior to input_line, postfix is print after input_line.
     '''
     if not postfix:
-        postfix = '\n'
+        postfix = ''
     _output(input_line, prefix, postfix, outf)
 
 def _output(input_line, prefix=None, postfix=None, outf=sys.stdout):

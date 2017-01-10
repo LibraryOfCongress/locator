@@ -81,7 +81,7 @@ class CongressionalRecordIndexLocatorTest(unittest.TestCase):
         for output_tuple in parser.parse():
             name, output = output_tuple
             self.assertEqual(
-            "<h2>\nRemarks in House\n\n</h2>\n<p>\nAnderson, Michael and Kelly: Ryan Purcell Foundation Tim O'Neil Good Samaritan Award recipients, E1369 [28SE]\n\n</p>\n<p>\nDoctor, Don and Patty Jackson: Ryan Purcell Foundation Michael J. Diggins Community Service Award recipients, E1368 [28SE]\n</p>\n",
+            "<h2>Remarks in House\n</h2><p>Anderson, Michael and Kelly: Ryan Purcell Foundation Tim O'Neil Good Samaritan Award recipients, E1369 [28SE]\n</p><p>Doctor, Don and Patty Jackson: Ryan Purcell Foundation Michael J. Diggins Community Service Award recipients, E1368 [28SE]</p>",
                 output.read())
 
     def test_split_stanza(self):
@@ -110,12 +110,12 @@ class CongressionalRecordIndexLocatorTest(unittest.TestCase):
             if num == 0:
                 #self.assertEqual(name, b'RYAN-PURCELL-FOUNDATION.htm')
                 self.assertEqual(
-                    "<h2>\nRemarks in House\n\n</h2>\n<p>\nAnderson, Michael and Kelly: Ryan Purcell Foundation Tim O'Neil Good Samaritan Award recipients, E1369 [28SE]\n\n</p>\n<p>\nDoctor, Don and Patty Jackson: Ryan Purcell Foundation Michael J. Diggins Community Service Award recipients, E1368 [28SE]\n</p>\n",
+                    "<h2>Remarks in House\n</h2><p>Anderson, Michael and Kelly: Ryan Purcell Foundation Tim O'Neil Good Samaritan Award recipients, E1369 [28SE]\n</p><p>Doctor, Don and Patty Jackson: Ryan Purcell Foundation Michael J. Diggins Community Service Award recipients, E1368 [28SE]</p>",
                     iostream.read())
             else:
                 #self.assertEqual(name, b'Second-stanza-RYAN-PURCELL-FOUNDATION.htm')
                 self.assertEqual(
-                    "<h2>\nRemarks in House\n\n</h2>\n<p>\nAnderson, Michael and Kelly: Ryan Purcell Foundation Tim O'Neil Good Samaritan Award recipients, E1369 [28SE]\n\n</p>\n<p>\nDoctor, Don and Patty Jackson: Ryan Purcell Foundation Michael J. Diggins Community Service Award recipients, E1368 [28SE]\n</p>\n",
+                    "<h2>Remarks in House\n</h2><p>Anderson, Michael and Kelly: Ryan Purcell Foundation Tim O'Neil Good Samaritan Award recipients, E1369 [28SE]\n</p><p>Doctor, Don and Patty Jackson: Ryan Purcell Foundation Michael J. Diggins Community Service Award recipients, E1368 [28SE]</p>",
                     iostream.read())
 
 

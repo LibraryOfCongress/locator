@@ -197,4 +197,4 @@ class LocatorTest(unittest.TestCase):
             contents = out_io.getvalue()
             self.assertEqual(
                 contents,
-                "<span class='bell-I67H dailydigest-extension'>\n")
+                "<span class='bell-I67H dailydigest-extension'>")
