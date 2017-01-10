@@ -1,0 +1,8 @@
+locator/__init__.py
+locator/congressionalrecordindex.py
+locator/dailydigest.py
+locator/parser.py
+locator.egg-info/PKG-INFO
+locator.egg-info/SOURCES.txt
+locator.egg-info/dependency_links.txt
+locator.egg-info/top_level.txt

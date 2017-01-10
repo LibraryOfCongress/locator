@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: locator
+Version: 0.2.2
+Summary: Simple gpo locator code parser
+Home-page: www.loc.gov
+Author: Richard Larson
+Author-email: rlarson@loc.gov
+License: UNKNOWN
+Description: Ported the Thomas/LIS dailydigest parser code from C/ICON to simple python.
+Platform: UNKNOWN
