@@ -59,4 +59,4 @@ part of the congress.gov project.
 
 ## License
 
-TODO: Write license
+See License file.
