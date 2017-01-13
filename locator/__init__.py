@@ -28,7 +28,7 @@ MAPPING = {b'\x009': b' ',  # tab to space
            b'\x5f': b'--' , # replace underbar with double hyphen??? TODO: check
            b'\x18': b'<br />' , # \x18 CANCEL-> <br/> ?
            b'\x1a': b'<br />' , # \x1a Substitute -> <br/> ?
-           #b'\xff': b'&yuml;' , #  y with .. over it.
+           #b'\xff': b'&yuml;' , #  y with .. dots over it. used to indicate accents
 }
 
 
@@ -184,7 +184,7 @@ ESCAPE_SEQUENCES = {#esc    # action
                              b'c':  {'desc' :'acute' ,      'html':b'c&#180;' }, #TODO check
                              b's':  {'desc' :'acute' ,      'html':b's&#180;' }, #TODO check
 
-                             b'a':  {'desc' :'acute' ,      'html':b'&#223;' },
+                             b'a':  {'desc' :'acute' ,      'html':b'&#225;' },
                              b'e':  {'desc' :'acute' ,      'html':b'&#233;' },
                              b'i':  {'desc' :'acute' ,      'html':b'&#237;' },
                              b'o':  {'desc' :'acute' ,      'html':b'&#243;' },
@@ -203,6 +203,7 @@ def process_escapes(found, orig_line, current_start, current_line, current_grid 
     '''
     logger.debug("process esc:%s", current_line)
     output = current_line
+    logger.debug("Current_grid[1:]:%s ", current_grid[1:])
     if int(current_grid[1:]) <= 4:
         replace = found.group('replace')
         esc = found.group('esc')
