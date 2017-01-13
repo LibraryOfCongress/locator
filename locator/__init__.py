@@ -17,6 +17,7 @@ from itertools import zip_longest
 REMOVE_CHARS = [b'\x000', b'\x00A', b'\x00D',
                 b'\x01B', b'\x01C', b'\xac',
                 b'\x07F\d+', #seems to appear at the head of a page/section
+                b'\x07S\d+', # subformat codes?
                 #b'\xad',
                 #b'\xa8'
 ]
