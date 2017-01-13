@@ -19,12 +19,12 @@ TODO: Write usage instructions
 
 ## Contributing
 
-0. Read GPOs documentation about locator codes: https://www.gpo.gov/vendors/composition.htm
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
+1. Read GPOs documentation about locator codes: https://www.gpo.gov/vendors/composition.htm
+2. Fork it!
+3. Create your feature branch: `git checkout -b my-new-feature`
+4. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+6. Submit a pull request :D
 
 1.. Setup 2 factor auth if you have not done so already
 2.  Generate personel token:
