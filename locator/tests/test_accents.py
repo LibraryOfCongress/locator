@@ -29,16 +29,16 @@ class AccentsTest(unittest.TestCase):
         line = b'Luja\xffAE1n, Ben'
         current_grid = b'G2'
         aline= process_escapes_in_line(line, current_grid)
-        self.assertEqual( b"Luj&#225;n, Ben", aline)
+        self.assertEqual( b"Luj&aacute;n, Ben", aline)
 
     def test_process_eecute(self):
         ''' e acute '''
         line = b'e\xffAE1'
         current_grid = b'G2'
         aline= process_escapes_in_line(line, current_grid)
-        self.assertEqual( b"&#233;", aline)
+        self.assertEqual( b"&eacute;", aline)
 
     def test_accent_1(self):
         '''Test to convert accents'''
         final = self._load_and_convert('accents.rec')
-        self.assertEqual(final,  '''<html><h3><em>Thursday, September 15, 2016 <br /></em></h3>Luj&#225;n, Ben<br />\n<br /></html>''')
+        self.assertEqual(final,  '''<html><h3><em>Thursday, September 15, 2016 <br /></em></h3>Luj&aacute;n, Ben<br />\n<br /></html>''')

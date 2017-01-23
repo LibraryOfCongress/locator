@@ -173,25 +173,51 @@ ESCAPE_SEQUENCES = {#esc    # action
                     b'AE0': { 'S':  {'desc' :'breve' ,      'html':b'&#169;' },
                              's':  {'desc' :'breve' ,      'html':b'&#154;' },
                            },
+                    b'AE2':{ b'A':  {'desc' :'grave' ,      'html':b'&#192;' },
+                             b'E':  {'desc' :'grave' ,      'html':b'&#200;' },
+                             b'I':  {'desc' :'grave' ,      'html':b'&#204;' },
+                             b'O':  {'desc' :'grave' ,      'html':b'&#210;' },
+                             b'U':  {'desc' :'grave' ,      'html':b'&#217;' },
 
-                    b'AE1':{ b'A':  {'desc' :'acute' ,      'html':b'&#193;' },
-                             b'E':  {'desc' :'acute' ,      'html':b'&#201;' },
-                             b'I':  {'desc' :'acute' ,      'html':b'&#205;' },
-                             b'O':  {'desc' :'acute' ,      'html':b'&#211;' },
-                             b'U':  {'desc' :'acute' ,      'html':b'&#218;' },
-                             b'Y':  {'desc' :'acute' ,      'html':b'&#221;' },
+                             b'a':  {'desc' :'grave' ,      'html':b'&#224;' },
+                             b'e':  {'desc' :'grave' ,      'html':b'&#232;' },
+                             b'i':  {'desc' :'grave' ,      'html':b'&#236;' },
+                             b'o':  {'desc' :'grave' ,      'html':b'&#242;' },
+                             b'u':  {'desc' :'grave' ,      'html':b'&#249;' },
+                           },
+
+                    b'AE1':{ b'A':  {'desc' :'acute' ,      'html':b'&Aacute;' },
+                             b'E':  {'desc' :'acute' ,      'html':b'&Eacute;' },
+                             b'I':  {'desc' :'acute' ,      'html':b'&Iacute;' },
+                             b'O':  {'desc' :'acute' ,      'html':b'&Oacute;' },
+                             b'U':  {'desc' :'acute' ,      'html':b'&Uacute;' },
+                             b'Y':  {'desc' :'acute' ,      'html':b'&Yacute;' },
 
                              b'c':  {'desc' :'acute' ,      'html':b'c&#180;' }, #TODO check
                              b's':  {'desc' :'acute' ,      'html':b's&#180;' }, #TODO check
 
-                             b'a':  {'desc' :'acute' ,      'html':b'&#225;' },
-                             b'e':  {'desc' :'acute' ,      'html':b'&#233;' },
-                             b'i':  {'desc' :'acute' ,      'html':b'&#237;' },
-                             b'o':  {'desc' :'acute' ,      'html':b'&#243;' },
-                             b'u':  {'desc' :'acute' ,      'html':b'&#250;' },
-                             b'y':  {'desc' :'acute' ,      'html':b'&#253;' },
+                             b'a':  {'desc' :'acute' ,      'html':b'&aacute;' },
+                             b'e':  {'desc' :'acute' ,      'html':b'&eacute;' },
+                             b'i':  {'desc' :'acute' ,      'html':b'&iacute;' },
+                             b'o':  {'desc' :'acute' ,      'html':b'&oacute;' },
+                             b'u':  {'desc' :'acute' ,      'html':b'&uacute;' },
+                             b'y':  {'desc' :'acute' ,      'html':b'&yacute;' },
+                           },
+
+                    b'AE3':{ b'A':  {'desc' :'acirc' ,      'html':b'&#194;' },
+                             b'E':  {'desc' :'acirc' ,      'html':b'&#202;' },
+                             b'I':  {'desc' :'acirc' ,      'html':b'&#206;' },
+                             b'O':  {'desc' :'acirc' ,      'html':b'&#212;' },
+                             b'U':  {'desc' :'acirc' ,      'html':b'&#219;' },
+
+                             b'a':  {'desc' :'acirc' ,      'html':b'&#226;' },
+                             b'e':  {'desc' :'acirc' ,      'html':b'&#234;' },
+                             b'i':  {'desc' :'acirc' ,      'html':b'&#238;' },
+                             b'o':  {'desc' :'acirc' ,      'html':b'&#244;' },
+                             b'u':  {'desc' :'acirc' ,      'html':b'&#251;' },
                    }
     }
+
 def process_escapes(found, orig_line, current_start, current_line, current_grid , escape_sequences=ESCAPE_SEQUENCES):
     ''' if current_grid > 4 then do something else
     do our conversions see documentation..found on cornell law site

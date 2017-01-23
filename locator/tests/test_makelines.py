@@ -162,7 +162,7 @@ class LocatorTest(unittest.TestCase):
         '''
         input = b'\x07I04See Interim Re\xffAE1sume\xffAE1 of Congressional Activity.'
 
-        temp1 = b'\x07I04See Interim R&#233;sum&#233; of Congressional Activity.'
+        temp1 = b'\x07I04See Interim R&eacute;sum&eacute; of Congressional Activity.'
         line = process_escapes_in_line(input, 'G1')
         self.assertEqual(line, temp1)
 

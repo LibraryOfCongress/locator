@@ -134,4 +134,4 @@ class CongressionalRecordIndexLocatorTest(unittest.TestCase):
                                outputparser=OutputParser())
         for output_tuple in parser.parse():
             name, output = output_tuple
-            self.assertEqual(name,  b'ACEVEDO-VIL&#193;-AN&#205;BAL.htm')
+            self.assertEqual(name,  b'ACEVEDO-VIL&Aacute;-AN&Iacute;BAL.htm')
