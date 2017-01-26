@@ -261,7 +261,7 @@ def process_escapes_in_line(line, current_grid):
 
 def process_lines(line, current_state, outputf=sys.stdout,
                       locator_table=None,
-                      font_table=None, postfix="<br />"):
+                      font_table=None, postfix=None):
     '''For every line process it for locator codes,
     Set the current_state to the action's grid,value  unless it is a
     Font locator (T\d+).  We use the grid code of the current locator action

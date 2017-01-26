@@ -46,7 +46,7 @@ class DailyDigestInputParser(InputParser):
         b"I15": {'start': "<p>",                 'end': "<br>",                'grid': b"G1", },
         b"I21": {'start': "<p>",                 'end': "",                    'grid': b"G1", },
         b"I29": {'start': "<p><strong>",         'end': "</strong><br>",       'grid': b"G1", },
-        b"I30": {'start': "<br /><p><strong>",         'end': "</strong>",           'grid': b"G1", },
+        b"I30": {'start': "<br /><p><strong>",   'end': "</strong>",           'grid': b"G1", },
         b"I31": {'start': "<strong>",            'end': "</strong>",           'grid': b"G1", },
         b"I40": {'start': "<em>",                'end': "</em>",               'grid': b"G1", },
         b"I41": {'start': "<strong><em>",        'end': "</em></strong>",      'grid': b"G2", },

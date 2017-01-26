@@ -68,7 +68,7 @@ class InputParser(object):
         outputfile=None,
         locator_table=None,
         font_table=None,
-        postfix="<br />"):
+        postfix=None):
         ''' output by default is a StringIO object, you will probably want to
         output = parse_io(...)
         output.seek(0)
