@@ -86,7 +86,7 @@ class InputParser(object):
         current_page = None
         output("<html>", outf=out)
         for page, page_match, line in self.makelines(input, output=out):
-            current_state , output_line = process_lines(
+            current_state_stack , output_line = process_lines(
                 line,
                 current_state,
                 outputf=out,
@@ -95,6 +95,7 @@ class InputParser(object):
                 postfix=postfix)
             logger.debug("Current_state:%s", current_state)
             logger.debug("Page:%s Current_page:%s", page, current_page)
+            current_state = current_state_stack[-1]
 
             if page:
                 #output = re.sub(b'\x07',b'[BELL-]', line)
@@ -217,7 +218,7 @@ class OutputParser(object):
     '''
 
     def parse(self, input, **kwargs):
-        logger.debug("Output parser returning :%s" ,  input)
+        #logger.debug("Output parser returning :name= %s data=%s" ,  input[0], input[1])
         return input
 
 class MultipleOutputFilesOutputParser(object):
@@ -251,7 +252,7 @@ class MultipleOutputFilesOutputParser(object):
         if basedir != '':
             basedir = basedir + "/"
 
-        name, stream = input_tuple
+        (name, line), stream = input_tuple
         logger.debug("basedir:%s", basedir)
         logger.debug("prepend:%s", filename_prepend)
         logger.debug("name   :%s", name)

@@ -6,7 +6,8 @@
 
 import re
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(format='%(levelname)s %(pathname)s %(lineno)s:%(message)s', level=logging.DEBUG)
+#logging.basicConfig(format='%(levelname)s %(filename)s %(lineno)s:%(message)s', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
@@ -47,21 +48,13 @@ def remove_chars(line, remove_chars, to_string=b''):
     '''Remove a list of chars from a line
     replacing with empty string by default or passed in variable
     .'''
-    if len(line) < 100:
-        logger.debug(
-        "\tRemoving:%s from %s  with [%s]",
-        remove_chars,
-        line,
-        to_string)
-    else:
-        logger.debug(
-        "\tRemoving:%s from input_line(>100 elements) with [%s]",
-        remove_chars,
-        to_string)
-
     for character in (remove_chars):
-        line = re.sub(character  , to_string, line)
+        m = re.search(character, line)
+        if m:
+            line = re.sub(character, to_string, line)
+            logger.debug(b"Replaced [%s] with [%s] in input", character, to_string)
     return line
+
 
 
 def translate_chars(line, mapping):
@@ -90,7 +83,7 @@ def find_locators(line):
     match.group('locator') gives the locator code without the Bell
     '''
     code = None
-    m = re.finditer(b'\x07(?P<locator>I67H|I66F|T\d?|[a-su-zA-SU-Z]\d{0,2})', line)
+    m = re.finditer(b'\x07(?P<locator>I67H|I66F|T\d?|g\d{0,3}|[a-su-zA-SU-Z]\d{0,2})', line)
     if m:
         code = m
     return code
@@ -99,13 +92,11 @@ def find_escape(line, current_grid=b'G1'):
     ''' Escape sequences usually replace a preceding char, like an accented
     e in resume or in foreign accented chars.
     '''
-    logger.debug("esc: line:%s", line)
     code = None
     #m = re.finditer(b'(?P<replace>\w)?\xff(?P<esc>\w{2,3})', line)
-    m = re.finditer(b'(?P<replace>.?)\xff(?P<esc>AE\d|AF\d|0\d|\dA)', line)
+    m = re.finditer(b'(?P<replace>.?)\xff(?P<esc>AE\d|AF\d|0\d|\dA|E\d)', line)
     if m:
         code = m
-    logger.debug("Found :%s", code)
     return code
 
 def translate_locator(locator, grid=b'G2',
@@ -139,7 +130,7 @@ def output(input_line, prefix=None, postfix=None, outf=sys.stdout):
     _output(input_line, prefix, postfix, outf)
 
 def _output(input_line, prefix=None, postfix=None, outf=sys.stdout):
-    logger.debug("[%s] %s [%s]", prefix, input_line, postfix)
+    #logger.debug("[%s] %s [%s]", prefix, input_line, postfix)
     if isinstance(input_line, bytes):
         line = input_line.decode('latin1').encode('utf-8')
     else:
@@ -151,7 +142,6 @@ def _output(input_line, prefix=None, postfix=None, outf=sys.stdout):
                 outf.write (prefix.decode("utf-8"))
             else:
                 outf.write (line)
-        logger.debug("%s", line)
         if isinstance(line, bytes) :
             outf.write (line.decode("utf-8"))
         else:
@@ -192,7 +182,7 @@ ESCAPE_SEQUENCES = {#esc    # action
                              b'y':  {'desc' :'acute' ,      'html':b'&#253;' },
                    }
     }
-def process_escapes(found, orig_line, current_start, current_line, current_grid , escape_sequences=ESCAPE_SEQUENCES):
+def process_escapes(found, orig_line, current_start, current_line, current_grid , escape_sequences=ESCAPE_SEQUENCES ):
     ''' if current_grid > 4 then do something else
     do our conversions see documentation..found on cornell law site
     <replace char>\xff<esc>
@@ -228,14 +218,13 @@ def process_escapes(found, orig_line, current_start, current_line, current_grid 
                 keep_replacement= True
 
             logger.debug("process esc: esc:%s, replace:%s action:%s", esc, replace, action)
-            replace_with_html = b''
             replace_with_html = action.get('html')
             if keep_replacement:
                 output = none2empty(orig_line[current_start:found.start()]) + none2empty(replace) + none2empty(replace_with_html)
-            else:
+            else :
                 output = orig_line[current_start:found.start()] + replace_with_html
             if action.get('desc') == 'default':
-                logger.warn("No translation from %s, defaulting to empty space..", esc)
+                logger.warning("No translation from %s, defaulting to empty space..", esc)
             current_start = found.end()
 
     logger.debug("output:%s", output)
@@ -246,12 +235,16 @@ def none2empty(input):
         return input
     return b''
 
-def process_escapes_in_line(line, current_grid):
+def process_escapes_in_line(line, current_grid, escape_sequences=None):
+    if not escape_sequences:
+        escape_sequences = ESCAPE_SEQUENCES
     current_start = 0
     current_line = b''
     for afound in find_escape(line, current_grid):
         logger.debug("line:%s", line)
-        a_current_line , current_start = process_escapes(afound, line, current_start, current_line,  current_grid )
+        a_current_line , current_start = process_escapes(afound, line,
+                            current_start, current_line,  current_grid ,
+                            escape_sequences=escape_sequences)
         current_line = current_line + a_current_line
         logger.debug("after esc :%s", current_line)
     if current_start > 0:
@@ -271,6 +264,8 @@ def process_lines(line, current_state, outputf=sys.stdout,
     current_state = tuple( action,b'G2')
     There should only be one locator per line at the begining.
     '''
+    state_stack= []
+    state_stack.append(current_state)
     line_start = 0
     current_grid = current_state[1]
     for found in find_locators(line):
@@ -287,13 +282,14 @@ def process_lines(line, current_state, outputf=sys.stdout,
                 # set the current grid equal to the locator codes grid code.
                 current_grid = action.get('grid')
             current_state = ( action, current_grid )
+            state_stack.append(current_state)
     if line:
         line = process_escapes_in_line(line, current_grid)
         output_line = line[line_start:]
         output (output_line, postfix=postfix,outf=outputf)
     else:
         output_line = None
-    return current_state, output_line
+    return state_stack, output_line
 
 def process_actions(found, line, line_start, current_state, actions, outputf=None):
     ''' Process a given locator code according to the actions object

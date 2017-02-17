@@ -74,12 +74,13 @@ class LocatorTest(unittest.TestCase):
         self.assertEqual(cleaned, b'')
 
     def test_translate_chars(self):
+        """ Test of mapping chars (tab->space, ndash space underbar, etc..."""
         doc = b''
         good = b''
         for k, v in MAPPING.items():
             doc = doc + k
             good = good + v
-        #print (doc)
+        print (doc)
         self.assertNotEqual(doc, b'')
         cleaned = translate_chars(doc, MAPPING)
         self.assertEqual(cleaned, good)
@@ -117,10 +118,11 @@ class LocatorTest(unittest.TestCase):
         from locator.dailydigest import DailyDigestInputParser
 
         data = b'\x07I01Monday, April 18, 2016\xadD382'
-        current_state, _ = process_lines(
+        current_state_stack, _ = process_lines(
             data, (None, b'G2'),
             locator_table=DailyDigestInputParser.LOCATOR_TABLE,
             font_table=DailyDigestInputParser.FONT_TABLE)
+        current_state = current_state_stack[-1]
         self.assertEqual(
             current_state[0].get('end'),  '</em></h3>')
         self.assertEqual(
@@ -175,10 +177,11 @@ class LocatorTest(unittest.TestCase):
     def test_dailydigest_I67(self):
         from locator.dailydigest import DailyDigestInputParser
         data = b'\x07I67H'
-        current_state, _ = process_lines(
+        current_state_stack, _ = process_lines(
             data, (None, b'G2'),
             locator_table=DailyDigestInputParser.LOCATOR_TABLE,
             font_table=DailyDigestInputParser.FONT_TABLE)
+        current_state = current_state_stack[-1]
         self.assertEqual(
             current_state[0],
             {'end': '</span>', 'grid': b'', 'start':
