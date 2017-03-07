@@ -83,6 +83,7 @@ class InputParser(object):
             out = io.StringIO()
 
         input = inputfile.read()
+        input = input.strip()
         current_page = None
         output("<html>", outf=out)
         for page, page_match, line in self.makelines(input, output=out):

@@ -41,4 +41,4 @@ class AccentsTest(unittest.TestCase):
     def test_accent_1(self):
         '''Test to convert accents'''
         final = self._load_and_convert('accents.rec')
-        self.assertEqual(final,  '''<html><h3><em>Thursday, September 15, 2016 </em></h3><p>Luj&#225;n, Ben<br />\n</html>''')
+        self.assertEqual(final,  '''<html><h3><em>Thursday, September 15, 2016 </em></h3><p>Luj&#225;n, Ben<br /></html>''')
