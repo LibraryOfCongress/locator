@@ -26,7 +26,6 @@ class DailydigestTest(unittest.TestCase):
     def test_whitespace(self):
         '''Test to make sure whitespace is not being added in incorrectly'''
         final = self._load_and_convert('dtestPageWhitespace.rec')
-        #self.assertEqual(final,  '''<html><h3><em>Tuesday, September 6, 2016<br /></em></h3><center><h1>Daily Digest<br /></h1></center><h4>HIGHLIGHTS <br /></h4><br /><p><strong>Petitions and Memorials:<br /></strong><pre><strong>Pages S5276&ndash;77<br /></strong></pre><br /><p><strong>Additional Cosponsors:<br /></strong><pre><strong>Pages S5279&ndash;81\n<br /></html>''')
         self.assertEqual(final,  '''<html><h3><em>Tuesday, September 6, 2016</em></h3><center><h1>Daily Digest</h1></center><h4>HIGHLIGHTS </h4><br /><p><strong>Petitions and Memorials:</strong><br /><strong>Pages S5276&ndash;77</strong><br /><br /><br /><p><strong>Additional Cosponsors:</strong><br /><strong>Pages S5279&ndash;81</html>''')
 
 
@@ -40,6 +39,7 @@ class DailydigestTest(unittest.TestCase):
         and will just strip out \x07S{\d+}
         '''
 
-        #self.maxDiff = None
         final = self._load_and_convert('tdailydigestchar27.rec')
-        self.assertEqual(final,  '''<html><h3><em>Wednesday, September 14, 2016</em></h3><center><h1>Daily Digest</h1></center><strong> </strong><center><h2>Senate</h2></center><center><h3><em>Chamber Action</em></h3></center><strong> Senate continued consideration of S. 2848, to provide for the conservation and development of water and related resources, to authorize the Secretary of the Army to construct various projects for improvements to rivers and harbors of the United States, taking action on the following amendment proposed thereto: </strong><br /><strong>Pages S5694&ndash;S5718 </strong><br /><br /><p>:<p>McConnell (for Inhofe) Amendment No. 4979, in the nature of a substitute.  E1273<br /><center>[Page:D920] </center></html>''')
+        print ("final:\n%s" % final )
+        print ("good:\n%s" % '''<html><h3><em>Wednesday, September 14, 2016</em></h3><center><h1>Daily Digest</h1></center><strong> </strong><center><h2>Senate</h2></center><center><h3><em>Chamber Action</em></h3></center><strong> Senate continued consideration of S. 2848, to provide for the conservation and development of water and related resources, to authorize the Secretary of the Army to construct various projects for improvements to rivers and harbors of the United States, taking action on the following amendment proposed thereto: </strong><br /><strong>Pages S5694&ndash;S5718 </strong><br /><br /><p>:<p>McConnell (for Inhofe) Amendment No. 4979, in the nature of a substitute.  E1273<br />\n<center>[Page:D920] </center></html>''')
+        self.assertEqual(final,  '''<html><h3><em>Wednesday, September 14, 2016</em></h3><center><h1>Daily Digest</h1></center><strong> </strong><center><h2>Senate</h2></center><center><h3><em>Chamber Action</em></h3></center><strong> Senate continued consideration of S. 2848, to provide for the conservation and development of water and related resources, to authorize the Secretary of the Army to construct various projects for improvements to rivers and harbors of the United States, taking action on the following amendment proposed thereto: </strong><br /><strong>Pages S5694&ndash;S5718 </strong><br /><br /><p>:<p>McConnell (for Inhofe) Amendment No. 4979, in the nature of a substitute.  E1273<br />\n<center>[Page:D920] </center></html>''')

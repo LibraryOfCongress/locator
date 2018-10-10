@@ -108,47 +108,6 @@ class CongressionalRecordIndexLocatorTest(unittest.TestCase):
             self.assertEqual( stanza, good_stanzas[cnt])
             cnt = cnt +1
 
-    def _parse_cri_I01(self, data, year):
-        parser = LocatorParser(inputdata=data,
-                               inputparser=CongressionalRecordIndexInputParser(year=year),
-                               outputparser=OutputParser())
-
-        for num , output in enumerate( parser.parse()):
-            #name, iostream = output
-            yield num, output
-
-    def test_convert_locatorI01_to_mods_title(self):
-        '''Convert I01 titles to the mods title locator_title=b'I01A.B.A.T.E. OF ILLINOIS, INC.' '''
-        locator_title=b'I01A.B.A.T.E. OF ILLINOIS, INC.'
-        for num, output in self._parse_cri_I01(locator_title, 2014):
-            (file_name, term_text) , stream = output
-            self.assertEqual(term_text, b'A.B.A.T.E. OF ILLINOIS, INC.')
-            self.assertEqual(file_name, b'CRI-2014-A-B-A-T-E-OF-ILLINOIS-INC.htm')
-
-    def test_convert_locatorI01_to_mods_title_smith(self):
-        locator_title = b'I01A.O. SMITH CORP.'
-        for num, output in self._parse_cri_I01(locator_title, 2014):
-            (file_name, term_text) , stream = output
-            self.assertEqual(term_text, b'A.O. SMITH CORP.')
-            self.assertEqual(file_name, b'CRI-2014-A-O-SMITH-CORP.htm')
-
-
-    def test_convert_mods_title_to_filename(self):
-        '''<title>A.B.A.T.E. OF PENNSYLVANIA (organization)</title>  to mods_filename=b'CRI-2014-A-B-A-T-E-OF-PENNSYLVANIA-D033B6.htm' '''
-        mods_filename=b'CRI-2014-A-B-A-T-E-OF-PENNSYLVANIA-D033B6.htm'
-        mods_title=b'A.B.A.T.E. OF PENNSYLVANIA (organization)'
-        result2 = CongressionalRecordIndexInputParser.process_title(2014, mods_title)
-        self.assertEquals(mods_filename,  result2)
-
-    def test_convert_locatorI01_to_mods_title_periods_and_paren(self):
-        ''' locator_title = b'I01A.B.A.T.E. OF PENNSYLVANIA (organization)' '''
-        locator_title = b'I01A.B.A.T.E. OF PENNSYLVANIA (organization)'
-        for num, output in self._parse_cri_I01(locator_title, 2014):
-            (file_name, term_text) , stream = output
-            self.assertEqual(term_text, b'A.B.A.T.E. OF PENNSYLVANIA (organization)')
-            self.assertEqual(file_name, b'CRI-2014-A-B-A-T-E-OF-PENNSYLVANIA-D033B6.htm')
-
-
 
     def test_split_stanza(self):
         '''a stanza is a section of the locator file that will be split into
@@ -174,8 +133,7 @@ class CongressionalRecordIndexLocatorTest(unittest.TestCase):
         for num , output in enumerate( parser.parse()):
             name, iostream = output
             if num == 0:
-                self.assertEqual(name, (b'CRI-2014-RYAN-PURCELL-FOUNDATION.htm', b'RYAN PURCELL FOUNDATION'))
-                                 #b'CRI-2014-RYAN-PURCELL-FOUNDATION.htm')
+                self.assertEqual(name, b'CRI-2014-RYAN-PURCELL-FOUNDATION.htm')
                 self.assertEqual(
                     "<h2>Remarks in House\n</h2><p>Anderson, Michael and Kelly: Ryan Purcell Foundation Tim O'Neil Good Samaritan Award recipients, E1369 [28SE]\n</p><p>Doctor, Don and Patty Jackson: Ryan Purcell Foundation Michael J. Diggins Community Service Award recipients, E1368 [28SE]</p>",
                     iostream.read())
@@ -284,16 +242,7 @@ class TestCRITitleHashing(unittest.TestCase):
         MD5(" (a former Representative from New York)")= D09C5C....A4A
         returns "ADDABBO-JOSEPH-P-D09C5C"
         '''
-
-        # from the gpo specs:
-        text = b'ADDABBO, JOSEPH P. (a former Representative from New York)'
-        #result = CongressionalRecordIndexInputParser.process_title( 1989, b"ADDABBO, JOSEPH P.(a former Representative from New York)")
-        result = CongressionalRecordIndexInputParser.process_title( 1989, text)
+        result = CongressionalRecordIndexInputParser.process_title( 1989, b"ADDABBO, JOSEPH P.(a former Representative from New York)")
         self.assertEquals(result, b"CRI-1989-ADDABBO-JOSEPH-P-D09C5C.htm")
-
-        # but looking at the mods.xml file for 1989:
-        text = b'ADDABBO, JOSEPH P. (a former Representative from New York)'
-        result = CongressionalRecordIndexInputParser.process_title( 1989, text)
-        self.assertEquals(result, b"CRI-1989-ADDABBO-JOSEPH-P-7D0A5.htm")
 
 

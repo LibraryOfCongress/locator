@@ -235,22 +235,20 @@ class CongressionalRecordIndexInputParser(InputParser):
         4.
         {MD5-title-suffix} is a HEX representation of the first 24 bits (first 6 characters) of an MD5 digital signature of the characters in {title-suffix}.
 
-        5. "-{MD5-title-suffix}"
-            it is omitted when the granule title is equal or less than forty characters.
+        5. "-{MD5-title-suffix}
 
-        6. Remove characters such as commas, periods, etc. [Apparently that means change to space]
-
+        " is omitted when the granule title is equal or less than forty characters.
         6. Replace all single white spaces with a dash character "-".
+
+        7. Remove characters such as commas, periods, etc.
 
         Unfortunately it doesn't really work as they aren't using the exact same
         source title from the locator code that we generate.
         '''
-
-        # we had already converted some accented chars to html entities, convert to dash
         mymap = copy.deepcopy(MAPPING)
         mymap[b'\xff09'] = b'-'
         mymap[b'&ndash'] = b'-'
-        #title = title.upper()
+        title = title.upper()
 
         title = translate_chars(title, mymap)   # tab to space
         title_prefix = title[:40]
@@ -274,7 +272,6 @@ class CongressionalRecordIndexInputParser(InputParser):
         title_prefix = re.sub(b'\s+$', b'', title_prefix)
         #convert space to hyphen
         title_prefix = re.sub(b'[\s]+', b'-', title_prefix )
-        title_prefix = re.sub (b'-$', b'', title_prefix)
         md5_title_suffix = None
         if title_suffix:
             md5 = hashlib.md5()
