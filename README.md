@@ -11,6 +11,7 @@ Written for python3.
 
 to run it:
     python parser.py  locator_file.rec  >locator_file.html 2>/dev/null
+    
     python test_dailydigest.py  locator_file.rec  >locator_file.html 2>/dev/null
 
 unit tests:
