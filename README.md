@@ -10,7 +10,8 @@ TODO: Describe the installation process
 Written for python3.
 
 to run it:
-    python locator.py  locator_file.rec  >locator_file.html >/dev/null
+    python parser.py  locator_file.rec  >locator_file.html 2>/dev/null
+    python test_dailydigest.py  locator_file.rec  >locator_file.html 2>/dev/null
 
 unit tests:
     python -m unittest discover
