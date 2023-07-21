@@ -364,7 +364,7 @@ class CongressionalRecordIndexInputParser(InputParser):
 import collections
 
 
-class FakeEscapeSequences(collections.MutableMapping):
+class FakeEscapeSequences(collections.abc.MutableMapping):
     """Change the normal escape sequences for accents to always
     return an empty action for titles to not process accented chars.
     """
